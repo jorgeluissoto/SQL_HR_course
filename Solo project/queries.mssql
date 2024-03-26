@@ -61,5 +61,82 @@ SELECT *
 FROM suppliers
 WHERE supplier_name = 'Beans and Barley';
 
+-- Select all rows from the suppliers table where the supplier is NOT Beans and Barley
+SELECT *
+FROM suppliers
+WHERE NOT supplier_name = 'Beans and Barley';
+
+SELECT *
+FROM suppliers
+WHERE supplier_name <> 'Beans and Barley';
+
+-- Select all Robusta and Arabica coffee types
+SELECT *
+FROM suppliers
+WHERE coffee_type IN ('Arabica','Robusta');
+
+SELECT *
+FROM suppliers
+WHERE coffee_type = 'Arabica' 
+OR coffee_type = 'Robusta';
+
+-- Select all coffee types that are not Robusta or Arabica
+SELECT *
+FROM suppliers
+WHERE coffee_type NOT IN ('Arabica','Robusta');
+
+-- Select all employees with missing email addresses
+SELECT *
+FROM employees
+WHERE email IS NULL;
+
+-- Select all employees whose emails are not missing
+SELECT *
+FROM employees
+WHERE email IS NOT NULL;
+
+-- Select all employees who make between 35k and 50k
+SELECT *
+FROM employees
+WHERE salary BETWEEN 35000 AND 50000;
+
+--===========================================================
+
+-- ORDER BY, LIMIT, DISTINCT, Renaming columns
+
+-- Order by salary ascending (default do not need the ASC)
+SELECT *
+FROM employees
+ORDER BY salary ASC;
+
+-- Order by salary descending
+SELECT *
+FROM employees
+ORDER BY salary DESC;
+
+-- Top 10 highest paid employees
+SELECT *
+FROM employees
+ORDER BY salary DESC
+LIMIT 10;
+
+-- Return all unique coffeeshop ids
+SELECT DISTINCT coffeeshop_id
+FROM suppliers;
+
+-- Return all unique countries
+SELECT DISTINCT country
+FROM locations;
+
+-- Renaming columns
+
+--=========================================================
+
+-- EXTRACT
+
 -- https://www.youtube.com/watch?v=MvcDM2nLdzI
+
+
+
+
 
