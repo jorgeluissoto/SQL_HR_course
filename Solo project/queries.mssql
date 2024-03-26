@@ -129,6 +129,12 @@ SELECT DISTINCT country
 FROM locations;
 
 -- Renaming columns
+SELECT
+	email,
+	email AS email_address,
+	hire_date,
+	hire_date AS date_joined
+FROM employees;
 
 --=========================================================
 
