@@ -139,9 +139,90 @@ FROM employees;
 --=========================================================
 
 -- EXTRACT
+SELECT
+	hire_date,
+	EXTRACT(YEAR FROM hire_date) AS year,
+	EXTRACT(MONTH FROM hire_date) AS month,
+	EXTRACT(DAY FROM hire_date) AS day
+FROM employees;
 
--- https://www.youtube.com/watch?v=MvcDM2nLdzI
+--=========================================================
 
+-- UPPER, LOWER, LENGTH, TRIM
+
+-- Uppercase first and last names
+SELECT 
+	UPPER(first_name) AS first_name_upper,
+	UPPER(last_name) AS last_name_upper
+FROM employees;
+
+-- Lowercase first and last names
+SELECT 
+	LOWER(first_name) AS first_name_upper,
+	LOWER(last_name) AS last_name_upper
+FROM employees;
+
+-- Return the email and the length of emails
+SELECT 
+	email,
+	LENGTH(email) AS email_length
+FROM employees;
+
+-- TRIM removes the spaces from your data
+SELECT
+    LENGTH('     HELLO     ') AS hello_with_spaces,
+LENGTH('HELLO') AS hello_no_spaces,
+    LENGTH(TRIM('     HELLO     ')) AS hello_trimmed;
+
+--=========================================================
+
+-- Concatenation, Boolean expressions, wildcards
+SELECT
+	first_name,
+	last_name,
+	first_name || ' ' || last_name AS full_name
+FROM employees;
+
+-- Concatenate columns to create a sentence
+SELECT 
+	first_name || ' ' || last_name || ' makes ' || salary
+FROM employees;
+
+-- Boolean expressios
+-- if the person makes less than 50k, then true, otherwise false
+SELECT
+	first_name || ' ' || last_name AS full_name,
+	(salary < 50000) AS less_than_50k
+FROM employees;
+
+-- if the person is a female and makes less than 50k, then true, otherwise false
+SELECT
+	first_name || ' ' || last_name AS full_name,
+	(salary < 50000 AND gender = 'F') AS female_less_than_50k
+FROM employees;
+
+-- Boolean expressions with wildcards (% subString)
+-- if email has '.com', return true, otherwise false
+SELECT
+	email,
+	(email LIKE '%.com') AS dotcom_flag
+FROM employees;
+
+SELECT
+	email,
+	(email like '%.gov%') AS dotgov_flag
+FROM employees;
+
+-- return only government employees
+select
+  first_name || ' ' || last_name as full_name,
+  email as gov_email
+from employees
+where email like '%.gov%';
+
+--==========================================================
+
+-- SUBSTRING, POSITION, COALESCE
 
 
 
