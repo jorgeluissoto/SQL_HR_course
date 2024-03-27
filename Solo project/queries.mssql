@@ -221,9 +221,142 @@ from employees
 where email like '%.gov%';
 
 --==========================================================
-
 -- SUBSTRING, POSITION, COALESCE
 
+-- SUBSTRING
+-- Get the email from the 5th character
+SELECT
+	email,
+	SUBSTRING(email FROM 5)
+FROM employees;
 
+-- POSITION
+SELECT
+	email,
+	POSITION('@' IN email)
+FROM employees;
 
+-- SUBSTRING & POSITION to find the email client
+SELECT
+	email,
+	SUBSTRING(email FROM POSITION('@' IN email))ABORT
+FROM employees;
 
+SELECT 
+	email,
+	SUBSTRING(email FROM POSITION('@' IN email) + 1)
+FROM employees;
+
+-- COALESCE to fill missing emails with custom value
+SELECT 
+	email,
+	COALESCE(email, 'NO EMAIL PROVIDED')
+FROM employees;
+
+--===================================================
+-- MIN, MAX, AVG, SUM, COUNT
+
+-- Select the minimum salary
+SELECT MIN(salary) AS min_salary
+FROM employees;
+
+-- Select the maximum salary
+SELECT MAX(salary) AS max_salary
+FROM employees;
+
+-- Select difference between maximum and minimum salary
+SELECT MIN(salary) - MAX(salary) AS diff_salary
+FROM employees;
+
+-- Select the average salary
+SELECT AVG(salary) AS avg_salary
+FROM employees;
+
+-- Round average salary to nearest integer
+SELECT ROUND(AVG(salary),0) AS avg_salary
+FROM employees;
+
+-- Sum up the salaries
+SELECT SUM(salary)
+FROM employees;
+
+-- Count the number of entries
+SELECT COUNT(*)
+FROM employees;
+
+SELECT COUNT(salary)
+FROM employees;
+
+SELECT COUNT(email)
+FROM employees;
+
+-- summary
+SELECT
+  MIN(salary) as min_sal,
+  MAX(salary) as max_sal,
+  MAX(salary) - MIN(salary) as diff_sal,
+  round(avg(salary), 0) as average_sal,
+  sum(salary) as total_sal,
+  count(*) as num_of_emp
+FROM employees;
+
+--=========================================================
+-- GROUP BY & HAVING
+
+-- Return the number of employees for each coffeeshop
+SELECT 
+	coffeeshop_id, 
+	COUNT(employee_id) AS No_of_employees
+FROM employees
+GROUP BY 1;
+
+-- Return the total salaries for each coffeeshop
+SELECT
+	coffeeshop_id,
+	SUM(salary) AS total_salary
+FROM employees
+GROUP BY 1;
+
+-- Return the number of employees, the avg & min & max & total salaries for each coffeeshop
+SELECT
+	coffeeshop_id,
+	COUNT(employee_id) AS No_of_employees,
+	ROUND(AVG(salary),2) AS avg_sal,
+	MIN(salary) AS min_sal,
+	MAX(salary) AS max_sal,
+	SUM(salary) AS total_sal
+FROM employees
+GROUP BY 1
+ORDER BY 2 DESC;
+
+-- HAVING
+
+-- After GROUP BY, return only the coffeeshops with more than 200 employees
+SELECT
+	coffeeshop_id, 
+	COUNT(*) AS num_of_emp,
+	ROUND(AVG(salary), 0) AS avg_sal,
+	MIN(salary) AS min_sal,
+    MAX(salary) AS max_sal,
+	SUM(salary) AS total_sal
+FROM employees
+GROUP BY coffeeshop_id
+HAVING COUNT(*) > 200  -- filter, alter "where" after "gruop by"
+ORDER BY num_of_emp DESC;
+
+-- After GROUP BY, return only the coffeeshops with a minimum salary of less than 10k
+SELECT
+	coffeeshop_id, 
+	COUNT(*) AS num_of_emp,
+	ROUND(AVG(salary), 0) AS avg_sal,
+	MIN(salary) AS min_sal,
+    MAX(salary) AS max_sal,
+	SUM(salary) AS total_sal
+FROM employees
+GROUP BY coffeeshop_id
+HAVING MIN(salary) < 10000  -- filter, alter "where" after "gruop by"
+ORDER BY num_of_emp DESC;
+
+--===========================================================
+
+-- CASE, CASE with GROUP BY, and CASE for transposing data
